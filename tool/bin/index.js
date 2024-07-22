@@ -4,6 +4,9 @@ import arg from 'arg';
 import chalk from 'chalk';
 import { start } from '../src/commands/start.js';
 import getConfig from '../src/config/config-mgr.js';
+import { createLogger } from '../src/config/logger.js';
+
+const logger = createLogger('config:mgr');
 
 (async () => {
   try {
@@ -11,6 +14,8 @@ import getConfig from '../src/config/config-mgr.js';
       '--start': Boolean,
       '--build': Boolean,
     });
+
+    logger.debug('Received args', args);
 
     if (args['--start']) {
       const config = await getConfig(); // Await the Promise if getConfig is async
@@ -21,8 +26,7 @@ import getConfig from '../src/config/config-mgr.js';
       usage();
     }
   } catch (e) {
-    console.log(chalk.yellow(e.message));
-    console.log();
+    logger.warning(e.message);
     usage();
   }
 })();

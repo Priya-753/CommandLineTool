@@ -1,4 +1,3 @@
-import { promises as fs } from 'fs';
 import { extname } from 'path';
 
 export async function loadConfig(path) {
